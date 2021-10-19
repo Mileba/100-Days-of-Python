@@ -39,8 +39,49 @@ def off():
 
 
 while not is_machine_off:
+    def remove_resources():
+        resource = {}
+        water_resources = resources['water']
+        milk_resources = resources['milk']
+        coffee_resource = resources['coffee']
+
+        water_requirement = MENU[user_input]['ingredients']['water']
+        if user_input == "espresso":
+            milk_requirement = 0
+            coffee_requirement = MENU[user_input]['ingredients']['coffee']
+        else:
+            milk_requirement = MENU[user_input]['ingredients']['milk']
+            coffee_requirement = MENU[user_input]['ingredients']['coffee']
+
+        resource['water'] = water_resources - water_requirement
+        resource['milk'] = milk_resources - milk_requirement
+        resource['coffee'] = coffee_resource - coffee_requirement
+
+        return resource
+
+
     def check_resources():
-        print("checking........")
+        # print("checking........")
+        water = MENU[user_input]['ingredients']['water']
+        if user_input == "espresso":
+            milk = 0
+            coffee = MENU[user_input]['ingredients']['coffee']
+        else:
+            coffee = MENU[user_input]['ingredients']['coffee']
+            milk = MENU[user_input]['ingredients']['milk']
+
+        if water > resources['water']:
+            print("There is not enough water")
+            return True
+        elif milk > resources['milk']:
+            print("There is not enough milk")
+            return True
+        elif coffee > resources['coffee']:
+            print("There is not enough Coffee")
+        else:
+            return False
+
+
     def make_coffee():
         user_amount = process_payment()
         cost = MENU[user_input]['cost']
@@ -62,7 +103,7 @@ while not is_machine_off:
         nickles_doll = nickles * 0.05
         pennies_doll = pennies * 0.01
 
-        total_doll = quart_doll + dimes_doll + nickles_doll + pennies_doll
+        total_doll = round(quart_doll + dimes_doll + nickles_doll + pennies_doll, 2)
         return total_doll
 
 
@@ -85,16 +126,29 @@ while not is_machine_off:
         print(f"Money: {money}$")
 
 
-    user_input = input("What would you like? (espresso/latte/cappuccino): ")
+    user_input = input("What would you like? (espresso/latte/cappuccino): ").lower()
     if user_input == "report":
         report()
     elif user_input == "off":
         off()
     elif user_input == "espresso":
-        check_resources()
-        money += make_coffee()
+        resources_value = check_resources()
+        if resources_value:
+            is_machine_off = True
+        else:
+            resources = remove_resources()
+            money += make_coffee()
     elif user_input == "latte":
-        money += make_coffee()
+        resources_value = check_resources()
+        if resources_value:
+            is_machine_off = True
+        else:
+            resources = remove_resources()
+            money += make_coffee()
     elif user_input == "cappuccino":
-        money += make_coffee()
-
+        resources_value = check_resources()
+        if resources_value:
+            is_machine_off = True
+        else:
+            resources = remove_resources()
+            money += make_coffee()
