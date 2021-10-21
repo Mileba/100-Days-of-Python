@@ -1,13 +1,21 @@
-from menu import Menu, MenuItem
+from menu import Menu
 from coffee_maker import CoffeeMaker
 from money_machine import MoneyMachine
 
 money_machine = MoneyMachine()
 coffee_machine = CoffeeMaker()
-# menu_item = MenuItem()
 menu = Menu()
 available_menu = menu.get_items()
 is_machine_off = False
+
+
+def coffee_process(drink):
+    drink_name = menu.find_drink(drink)
+    if coffee_machine.is_resource_sufficient(drink_name):
+        drink_payment = money_machine.make_payment(drink_name.cost)
+        if drink_payment:
+            coffee_machine.make_coffee(drink_name)
+
 
 while not is_machine_off:
     # TODO 1: "Prompt User on what they want"
@@ -21,12 +29,12 @@ while not is_machine_off:
         money_machine.report()
     # TODO 4: "Handles what happens when user enters espresso"
     elif user_prompt == "espresso":
-        espresso = menu.find_drink("espresso")
-        payment = money_machine.make_payment(espresso.cost)
-        if payment:
-            print("coffee")
-            if coffee_machine.is_resource_sufficient(espresso):
-                coffee_machine.make_coffee(espresso)
-
+        coffee_process("espresso")
     # TODO 5: "Handles what happens when user enters latte"
+    elif user_prompt == "latte":
+        coffee_process("latte")
     # TODO 6: "Handles what happens when user enters cappuccino"
+    elif user_prompt == "cappuccino":
+        coffee_process("cappuccino")
+    else:
+        print("please choose from one of the option")
