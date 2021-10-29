@@ -38,10 +38,9 @@ if user_bet == winner:
     print(f"You Win, The winning turtle is color {winner}")
 else:
     print(f"You lose, The winning Turtle is color {winner}")
-# tim = Turtle('turtle')
-# tom = Turtle('turtle',)
-# jon = Turtle('turtle')
-# tim.penup()
+
+
+
 
 
 screen.exitonclick()
