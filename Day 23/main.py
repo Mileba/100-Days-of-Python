@@ -21,10 +21,12 @@ screen.onkey(snake.left, "Left")
 screen.onkey(snake.right, "Right")
 game_is_on = True
 
+
 def game_over():
     global game_is_on
     game_is_on = False
     score.game_over()
+
 
 while game_is_on:
     screen.update()
