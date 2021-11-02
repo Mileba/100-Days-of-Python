@@ -10,11 +10,22 @@ class Ball(Turtle):
         super().__init__()
         self.shape("circle")
         self.color("white")
-        self.speed("fast")
+        # self.speed("slowest")
         self.penup()
-        self.setheading(LEFT)
-        self.goto(240, 0)
+        self.x_move = 10
+        self.y_move = 10
 
     def move(self):
         """move the ball forward"""
-        self.forward(3)
+        new_x = self.xcor() + self.x_move
+        new_y = self.ycor() + self.y_move
+        self.goto(new_x, new_y)
+
+    def bounce(self):
+        """Bounce the ball when it hits the wall"""
+        self.y_move *= -1
+
+    def paddle(self):
+        self.x_move *= -1
+
+
