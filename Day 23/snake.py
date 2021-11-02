@@ -27,6 +27,15 @@ class Snake:
         tim.setposition(position, 0)
         self.snake_body.append(tim)
 
+    def reset_snake(self):
+        for body in self.snake_body:
+            body.goto(900,900)
+
+        self.snake_body.clear()
+        self.create_snake()
+        self.head = self.snake_body[0]
+
+
     def extend(self):
         self.add_body(1)
 

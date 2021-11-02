@@ -23,9 +23,11 @@ game_is_on = True
 
 
 def game_over():
-    global game_is_on
-    game_is_on = False
-    score.game_over()
+    # global game_is_on
+    # game_is_on = False
+    score.update_highscore()
+    snake.reset_snake()
+    food.refresh()
 
 
 while game_is_on:
